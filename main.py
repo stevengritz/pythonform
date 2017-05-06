@@ -9,7 +9,8 @@ MAIN_PAGE_HTML = """\
 <html>
   <body>
     <form action="/sign" method="post">
-      <div><textarea name="content" rows="3" cols="60"></textarea></div>
+      <div><text name="First_Name" ></text></div>
+      <div><text name="Last_Name" ></text></div>
       <div><input type="submit" value="Sign Guestbook"></div>
     </form>
   </body>
