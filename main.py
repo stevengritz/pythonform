@@ -51,7 +51,7 @@ class RedirectPage(webapp2.RequestHandler):
 	def get(self):
 		
 		code = self.request.get('code')
-		self.response.write(code)
+		#self.response.write(code)
 
 		token_params = {
 		"grant_type" : "authorization_code",
@@ -67,7 +67,8 @@ class RedirectPage(webapp2.RequestHandler):
 		#self.response.write(json.dumps(token_json))
 		token_string = token_json['access_token']
 
-		token_get_header = {"Authorization" : "bearer " + token_string}
+		token_get_header = {'Authorization' : "bearer " + token_string,
+							'cache-control': "no-cache"}
 
 		#google_response = urllib.urlopen("https://www.googleapis.com/plus/v1/people/me?%s" % urllib.urlencode(token_get_params))
 		google_request = urllib2.Request(url = "https://www.googleapis.com/plus/v1/people/me", headers = token_get_header)
