@@ -25,6 +25,7 @@ def homepage():
 
 def make_authorization_url():
 	
+	global state
 	state = webapp2_extras.security.generate_random_string(12)
 	
 	params = {"client_id": CLIENT_ID,
