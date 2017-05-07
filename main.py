@@ -45,7 +45,6 @@ def make_authorization_url():
 			  "redirect_uri": REDIRECT_URI,
 			  "duration": "temporary",
 			  "scope": "email"}
-	import urllib
 	url = "https://accounts.google.com/o/oauth2/auth?" + urllib.urlencode(params)
 	return url  
 
