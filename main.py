@@ -94,8 +94,8 @@ class RedirectPage(webapp2.RequestHandler):
 		google_response_json = json.load(google_response)
 		self.response.write(json.dumps(google_response_json))
 
-		self.response.write(google_response_json['name']['givenName'] + '\n')
-		self.response.write(google_response_json['name']['familyName'] + '\n')
+		#self.response.write(google_response_json['name']['givenName'] + '\n')
+		#self.response.write(google_response_json['name']['familyName'] + '\n')
 
 
 # [START app]
