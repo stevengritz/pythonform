@@ -95,13 +95,6 @@ class RedirectPage(webapp2.RequestHandler):
 		self.response.write(google_response_json['name']['givenName'] + '\n')
 		self.response.write(google_response_json['name']['familyName'] + '\n')
 
-class DisplayPage(webapp2.RequestHandler):
-	def get(self):
-
-
-		google_response_json = json.loads(self.request.body)
-		self.response.write(google_response_json['name']['givenName'] + '\n')
-		self.response.write(google_response_json['name']['familyName'] + '\n')
 
 # [START app]
 allowed_methods = webapp2.WSGIApplication.allowed_methods
