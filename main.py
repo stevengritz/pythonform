@@ -85,12 +85,12 @@ class RedirectPage(webapp2.RequestHandler):
 		#get the token
 		token_json = json.load(token_response)
 		print json.dumps(token_json)
-		token_string = token_json['access_token']
+		#token_string = token_json['access_token']
 
-		token_get_params = {"Authorization" : "bearer" + token_string}
+		#token_get_params = {"Authorization" : "bearer" + token_string}
 
 		#google_response = urllib.urlopen(API_URL % token_get_params)
-		google_response = urllib.urlopen(API_URL % token_get_params)
+		#google_response = urllib.urlopen(API_URL % token_get_params)
 
 class DisplayPage(webapp2.RequestHandler):
 	def get(self):
