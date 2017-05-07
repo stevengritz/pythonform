@@ -72,7 +72,7 @@ class RedirectPage(webapp2.RequestHandler):
 		#google_response = urllib.urlopen("https://www.googleapis.com/plus/v1/people/me?%s" % urllib.urlencode(token_get_params))
 		google_request = urllib2.Request("https://www.googleapis.com/plus/v1/people/me",	 
 			header = token_get_header)
-		googlw_respone = urllib2.urlopen(google_request)
+		google_response = urllib2.urlopen(google_request)
 		#google_response = urllib.urlopen(API_URL % token_get_params)
 		google_response_json = json.load(google_response)
 		#self.response.write("https://www.googleapis.com/plus/v1/people/me?%s" % urllib.urlencode(token_get_params) + '\n')
@@ -89,7 +89,6 @@ new_allowed_methods = allowed_methods.union(('PATCH',))
 webapp2.WSGIApplication.allowed_methods = new_allowed_methods
 app = webapp2.WSGIApplication([
 	('/', MainPage),
-	#('/responsepage', ResponsePage),
 	('/policy', PolicyPage),
 	('/redirect', RedirectPage),
 
