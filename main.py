@@ -3,8 +3,6 @@ from google.appengine.api import users
 import webapp2
 import json
 import urllib
-import requests
-import requests.auth
 
 
 MAIN_PAGE_HTML = """\
@@ -54,7 +52,7 @@ def make_authorization_url():
 class MainPage(webapp2.RequestHandler):
 	def get(self):
 
-		self.response.write(make_authorization_url)
+		self.response.write(homepage())
 
 class ResponsePage(webapp2.RequestHandler):
     def post(self):
