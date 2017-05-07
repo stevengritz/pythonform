@@ -105,7 +105,6 @@ app = webapp2.WSGIApplication([
 	('/responsepage', ResponsePage),
 	('/policy', PolicyPage),
 	('/redirect', RedirectPage),
-	('/displayname', DisplayPage),
 
 ], debug=True)
 # [END app]
