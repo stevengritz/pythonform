@@ -76,7 +76,7 @@ class RedirectPage(webapp2.RequestHandler):
 		token_params = {
 		"grant_type" : "authorization_code",
 		"code" : code,
-		"redirect_uri" : REDIRECT_URI,
+		"redirect_uri" : REDIRECT_URI_SECONDARY,
 		"client_id" : CLIENT_ID,
 		"client_secret" : CLIENT_SECRET
 		}
