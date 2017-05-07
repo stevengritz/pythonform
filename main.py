@@ -70,8 +70,7 @@ class RedirectPage(webapp2.RequestHandler):
 		token_get_header = {"Authorization" : "bearer " + token_string}
 
 		#google_response = urllib.urlopen("https://www.googleapis.com/plus/v1/people/me?%s" % urllib.urlencode(token_get_params))
-		google_request = urllib2.Request("https://www.googleapis.com/plus/v1/people/me",	 
-			header = token_get_header)
+		google_request = urllib2.Request(url = "https://www.googleapis.com/plus/v1/people/me", headers = token_get_header)
 		google_response = urllib2.urlopen(google_request)
 		#google_response = urllib.urlopen(API_URL % token_get_params)
 		google_response_json = json.load(google_response)
