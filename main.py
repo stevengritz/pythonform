@@ -21,7 +21,7 @@ MAIN_PAGE_HTML = """\
 """
 
 CLIENT_ID = "22681371415-e54rraaueok44fbuk2ce46efcsah18tt.apps.googleusercontent.com"
-CLIENT_SECRET = "gDbCrJNvNYpYna-t4qTJhcu5"
+CLIENT_SECRET = "V3Jy-yd_HjmlcwELEEyRVJOI"
 #CLIENT_ID = "22681371415-985cnvfq394itn9gg39h5gfu5n9te1ln.apps.googleusercontent.com"
 #CLIENT_SECRET = "Lxnsh7lzqJNZBQ_AFFi8AD7O"
 REDIRECT_URI = "https://formtesting-166817.appspot.com/redirect"
