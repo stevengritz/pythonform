@@ -8,7 +8,7 @@ import urllib2
 
 
 CLIENT_ID = "22681371415-e54rraaueok44fbuk2ce46efcsah18tt.apps.googleusercontent.com"
-CLIENT_SECRET = "V3Jy-yd_HjmlcwELEEyRVJOI"
+CLIENT_SECRET = "lj3HWnDskTyDnCQLcj9344vn"
 #CLIENT_ID = "22681371415-985cnvfq394itn9gg39h5gfu5n9te1ln.apps.googleusercontent.com"
 #CLIENT_SECRET = "Lxnsh7lzqJNZBQ_AFFi8AD7O"
 REDIRECT_URI = "https://formtesting-166817.appspot.com/redirect"
@@ -16,6 +16,8 @@ REDIRECT_URI_SECONDARY = "https://formtesting-166817.appspot.com/displayname"
 #REDIRECT_URI = "http://localhost:8080/redirect"
 #REDIRECT_URI_SECONDARY = "http://localhost:8080/displayname"
 API_URL = "https://www.googleapis.com/plus/v1/people/me?"
+
+state = str()
 
 def homepage():
 	text = '<a href="%s">Authenticate with Google+</a>'
@@ -51,6 +53,9 @@ class RedirectPage(webapp2.RequestHandler):
 	def get(self):
 		
 		code = self.request.get('code')
+		req_state = self.request.get('state')
+		if state != req_state:
+			webapp2.abort(403)
 		#self.response.write(code)
 
 		token_params = {
