@@ -7,8 +7,8 @@ import urllib
 import urllib2
 
 
-CLIENT_ID = "22681371415-e54rraaueok44fbuk2ce46efcsah18tt.apps.googleusercontent.com"
-CLIENT_SECRET = "lj3HWnDskTyDnCQLcj9344vn"
+CLIENT_ID = "22681371415-mfjqri0d1tsdog1q8q9k8honco8gbj4v.apps.googleusercontent.com"
+CLIENT_SECRET = "3DQNUTNHrP48MP_EW2Bj1O1p"
 #CLIENT_ID = "22681371415-985cnvfq394itn9gg39h5gfu5n9te1ln.apps.googleusercontent.com"
 #CLIENT_SECRET = "Lxnsh7lzqJNZBQ_AFFi8AD7O"
 REDIRECT_URI = "https://formtesting-166817.appspot.com/redirect"
