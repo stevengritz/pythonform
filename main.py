@@ -84,13 +84,16 @@ class RedirectPage(webapp2.RequestHandler):
 		token_response = urllib.urlopen("https://accounts.google.com/o/oauth2/token", urllib.urlencode(token_params))
 		#get the token
 		token_json = json.load(token_response)
-		self.response.write(json.dumps(token_json))
-		#token_string = token_json['access_token']
+		#self.response.write(json.dumps(token_json))
+		token_string = token_json['access_token']
 
-		#token_get_params = {"Authorization" : "bearer" + token_string}
+		token_get_params = {"Authorization" : "bearer" + token_string}
 
+		google_response = urllib.urlopen(API_URL % token_get_params)
 		#google_response = urllib.urlopen(API_URL % token_get_params)
-		#google_response = urllib.urlopen(API_URL % token_get_params)
+		google_response_json = json.load(google_response)
+		self.response.write(google_response_json['name']['givenName'] + '\n')
+		self.response.write(google_response_json['name']['familyName'] + '\n')
 
 class DisplayPage(webapp2.RequestHandler):
 	def get(self):
