@@ -28,7 +28,7 @@ REDIRECT_URI = "https://formtesting-166817.appspot.com/redirect"
 REDIRECT_URI_SECONDARY = "https://formtesting-166817.appspot.com/displayname"
 #REDIRECT_URI = "http://localhost:8080/redirect"
 #REDIRECT_URI_SECONDARY = "http://localhost:8080/displayname"
-API_URL = "https://www.googleapis.com/plus/v1/people/me"
+API_URL = "https://www.googleapis.com/plus/v1/people/me?%s"
 
 GOOGLE_AUTH = """\
 <html>
