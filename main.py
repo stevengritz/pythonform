@@ -5,6 +5,7 @@ import webapp2_extras.security
 import json
 import urllib
 import urllib2
+import requests
 
 
 CLIENT_ID = "22681371415-mfjqri0d1tsdog1q8q9k8honco8gbj4v.apps.googleusercontent.com"
@@ -76,10 +77,10 @@ class RedirectPage(webapp2.RequestHandler):
 		token_get_header = {'Authorization' : "bearer " + token_string,
 							'cache-control': "no-cache"}
 
-		#google_response = urllib.urlopen("https://www.googleapis.com/plus/v1/people/me?%s" % urllib.urlencode(token_get_params))
-		google_request = urllib2.Request(url = "https://www.googleapis.com/plus/v1/people/me", headers = token_get_header)
-		google_response = urllib2.urlopen(google_request)
-		#google_response = urllib.urlopen(API_URL % token_get_params)
+		#google_request = urllib2.Request(url = "https://www.googleapis.com/plus/v1/people/me", headers = token_get_header)
+		#google_response = urllib2.urlopen(google_request)
+		google_response = requests.request("GET", url, headers=headers)
+
 		google_response_json = json.load(google_response)
 		#self.response.write("https://www.googleapis.com/plus/v1/people/me?%s" % urllib.urlencode(token_get_params) + '\n')
 
