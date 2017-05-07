@@ -6,20 +6,6 @@ import json
 import urllib
 
 
-MAIN_PAGE_HTML = """\
-<html>
-  <body>
-    <form action="/responsepage" method="post">
-  		First name:<br>
-  		<input type="text" name="firstname"><br>
-  		Last name:<br>
-  		<input type="text" name="lastname">
-      <div><input type="submit" value="Login"></div>
-    </form>
-  </body>
-</html>
-"""
-
 CLIENT_ID = "22681371415-e54rraaueok44fbuk2ce46efcsah18tt.apps.googleusercontent.com"
 CLIENT_SECRET = "V3Jy-yd_HjmlcwELEEyRVJOI"
 #CLIENT_ID = "22681371415-985cnvfq394itn9gg39h5gfu5n9te1ln.apps.googleusercontent.com"
@@ -30,13 +16,6 @@ REDIRECT_URI_SECONDARY = "https://formtesting-166817.appspot.com/displayname"
 #REDIRECT_URI_SECONDARY = "http://localhost:8080/displayname"
 API_URL = "https://www.googleapis.com/plus/v1/people/me?"
 
-GOOGLE_AUTH = """\
-<html>
-  <body>
-    <a href="https://www.googleapis.com/auth/userinfo.email">link Click here to authorize this app</a>
-  </body>
-</html>
-"""
 def homepage():
 	text = '<a href="%s">Authenticate with Google+</a>'
 	return text % make_authorization_url()
@@ -92,6 +71,8 @@ class RedirectPage(webapp2.RequestHandler):
 		google_response = urllib.urlopen("https://www.googleapis.com/plus/v1/people/me?%s" % urllib.urlencode(token_get_params))
 		#google_response = urllib.urlopen(API_URL % token_get_params)
 		google_response_json = json.load(google_response)
+		self.response.write("https://www.googleapis.com/plus/v1/people/me?%s" % urllib.urlencode(token_get_params) + '\n')
+
 		self.response.write(json.dumps(google_response_json))
 
 		#self.response.write(google_response_json['name']['givenName'] + '\n')
