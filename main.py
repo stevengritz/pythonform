@@ -89,7 +89,7 @@ new_allowed_methods = allowed_methods.union(('PATCH',))
 webapp2.WSGIApplication.allowed_methods = new_allowed_methods
 app = webapp2.WSGIApplication([
 	('/', MainPage),
-	('/responsepage', ResponsePage),
+	#('/responsepage', ResponsePage),
 	('/policy', PolicyPage),
 	('/redirect', RedirectPage),
 
