@@ -73,7 +73,7 @@ class RedirectPage(webapp2.RequestHandler):
 		#self.response.write(json.dumps(token_json))
 		token_string = token_json['access_token']
 
-		token_get_header = {'Authorization' : "bearer " + token_string,
+		token_get_header = {'Authorization' : "Bearer " + token_string,
 							'cache-control': "no-cache"}
 
 		google_request = urllib2.Request(url = "https://www.googleapis.com/plus/v1/people/me", headers = token_get_header)
