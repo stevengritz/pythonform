@@ -16,6 +16,13 @@ REDIRECT_URI_SECONDARY = "https://formtesting-166817.appspot.com/displayname"
 #REDIRECT_URI = "http://localhost:8080/redirect"
 #REDIRECT_URI_SECONDARY = "http://localhost:8080/displayname"
 API_URL = "https://www.googleapis.com/plus/v1/people/me?"
+HTML_BR = """\
+<html>
+	<body>
+		<br>
+	</body>
+</html>
+"""
 
 state = str()
 
@@ -83,10 +90,11 @@ class RedirectPage(webapp2.RequestHandler):
 		google_response_json = json.load(google_response)
 		#self.response.write("https://www.googleapis.com/plus/v1/people/me?%s" % urllib.urlencode(token_get_params) + '\n')
 
-		self.response.write(json.dumps(google_response_json))
+		#self.response.write(json.dumps(google_response_json))
 
-		#self.response.write(google_response_json['name']['givenName'] + '\n')
-		#self.response.write(google_response_json['name']['familyName'] + '\n')
+		self.response.write(google_response_json['name']['givenName'] + HTML_BR )
+		self.response.write(google_response_json['name']['familyName'] + HTML_BR )
+		self.response.write(req_state)
 
 
 # [START app]
