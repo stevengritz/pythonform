@@ -24,6 +24,21 @@ HTML_BR = """\
 </html>
 """
 
+HTML_WELCOME = """\
+<html>
+	<body>
+		<br>
+		<p>
+		This app goes through a simple OAuth2.0 flow with the Google+ API. Upon clicking the link, you will be 
+		redirected to the Google authentication. The scope of this flow is email only, meaning you are not granting full 
+		persmissions to the app for you entire Google account, just enough to retrieve basic info from your Google+ profile: 
+		first and last name.
+		</p>
+		<br>
+	</body>
+</html>
+"""
+
 state = str()
 
 def homepage():
@@ -46,6 +61,7 @@ def make_authorization_url():
 
 class MainPage(webapp2.RequestHandler):
 	def get(self):
+		self.response.write(HTML_WELCOME)
 
 		self.response.write(homepage())
 
@@ -77,7 +93,7 @@ class RedirectPage(webapp2.RequestHandler):
 		token_response = urllib.urlopen("https://accounts.google.com/o/oauth2/token", urllib.urlencode(token_params))
 		#get the token
 		token_json = json.load(token_response)
-		#self.response.write(json.dumps(token_json))
+
 		token_string = token_json['access_token']
 
 		token_get_header = {'Authorization' : "Bearer " + token_string,
@@ -85,16 +101,13 @@ class RedirectPage(webapp2.RequestHandler):
 
 		google_request = urllib2.Request(url = "https://www.googleapis.com/plus/v1/people/me", headers = token_get_header)
 		google_response = urllib2.urlopen(google_request)
-		#google_response = requests.request("GET", url, headers=headers)
 
 		google_response_json = json.load(google_response)
-		#self.response.write("https://www.googleapis.com/plus/v1/people/me?%s" % urllib.urlencode(token_get_params) + '\n')
 
-		#self.response.write(json.dumps(google_response_json))
 
-		self.response.write(google_response_json['name']['givenName'] + HTML_BR )
-		self.response.write(google_response_json['name']['familyName'] + HTML_BR )
-		self.response.write(req_state)
+		self.response.write("First name: " google_response_json['name']['givenName'] + HTML_BR )
+		self.response.write("Last name: " + google_response_json['name']['familyName'] + HTML_BR )
+		self.response.write("Generated state string: " + req_state)
 
 
 # [START app]
