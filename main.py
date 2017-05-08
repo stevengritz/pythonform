@@ -105,7 +105,7 @@ class RedirectPage(webapp2.RequestHandler):
 		google_response_json = json.load(google_response)
 
 
-		self.response.write("First name: " google_response_json['name']['givenName'] + HTML_BR )
+		self.response.write("First name: " + google_response_json['name']['givenName'] + HTML_BR )
 		self.response.write("Last name: " + google_response_json['name']['familyName'] + HTML_BR )
 		self.response.write("Generated state string: " + req_state)
 
