@@ -15,6 +15,7 @@ REDIRECT_URI = "https://formtesting-166817.appspot.com/redirect"
 API_URL = " https://api.imgur.com/3?"
 
 global access_token
+global current_user
 
 # [START main_page]
 class MainPage(webapp2.RequestHandler):
@@ -93,6 +94,7 @@ class RedirectPage(webapp2.RequestHandler):
 
 
 		id = google_response_json['id']
+		current_user = id;
 		user = google_response_json['displayName'] # displayname
 		url = google_response_json['url'] #image id of latest image
 		object_type = google_response_json['objectType']
@@ -117,24 +119,13 @@ class RedirectPage(webapp2.RequestHandler):
 
 class AccountPage(webapp2.RequestHandler):
 	def get(self):
-		imgur_response_acc_json = get_acc_info()
-		u = ndb.Key(urlsafe=user).get()
+		u = ndb.Key(urlsafe=current_user).get()
 		u_d = u.to_dict()
 		u_d['self'] = "/account"
 		self.response.write(json.dumps(u_d))
 
 	def post(self):
-		token_data = json.loads(self.request.body)
-		access_token = token_data['access_token']
-
-		token_get_header = {'Authorization' : "Bearer " + access_token,
-							'cache-control': "no-cache"}
-
-		imgur_response_acc_json = get_acc_info()
-
-		username = imgur_response_acc_json['data']['url']
-		reputation = imgur_response_acc_json['data']['reputation']
-		bio = username = imgur_response_acc_json['data']['bio']
+		
 
 		acc_info = AccInfo()
 		u = ndb.Key(urlsafe=username).get()
@@ -145,12 +136,34 @@ class AccountPage(webapp2.RequestHandler):
 			acc_info.bio = bio
 			acc_info.put()
 
-		self.response.write("Completed")
+		self.response.write("Completed" + access_token)
 
 class ActivityPage(webapp2.RequestHandler):
-	def get(self):
-		imgur_response_acc_json = get_acc_info()
-		u = ndb.Key(urlsafe=username).get()
+	def post(self, user = None):
+		query_data = json.loads(self.request.body)
+		query_string = query_data['query']
+
+		params = {
+			"query" : query_string,
+			"key" : access_token
+		}
+
+		google_request = urllib2.Request(url = "https://www.googleapis.com/plus/v1/activities", data = urllib.urlencode(params))
+		google_response = urllib2.urlopen(google_request)
+		google_response_json = json.load(google_response)
+
+		#Add top query entry to activty table with user key
+		u = ndb.Key(urlsafe=user).get()
+		u.query = query_string
+
+		act_info = ActivityInfo()
+		act_info.id = google_response_json['items'][0]['id']
+		act_info.query = query_string
+		act_info.title = google_response_json['items'][0]['title']
+		act_info.url = google_response_json['items'][0]['url']
+
+	def get(self, user = None):
+		u = ndb.Key(urlsafe=user).get()
 		u_d = u.to_dict()
 		u_d['self'] = "/latest"
 		self.response.write(json.dumps(u_d))
