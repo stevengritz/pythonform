@@ -6,7 +6,7 @@ CLIENT_ID = "449f7329486a792"
 CLIENT_SECRET = "0b9596450b366f69c2d0f017a902ecfbdac11443"
 #CLIENT_ID = "22681371415-985cnvfq394itn9gg39h5gfu5n9te1ln.apps.googleusercontent.com"
 #CLIENT_SECRET = "Lxnsh7lzqJNZBQ_AFFi8AD7O"
-REDIRECT_URI = "https://imgurwrapper.appspot.com/redirect"
+REDIRECT_URI = "https://formtesting-166817.appspot.com/redirect"
 #REDIRECT_URI = "http://localhost:8080/redirect"
 #REDIRECT_URI_SECONDARY = "http://localhost:8080/displayname"
 API_URL = " https://api.imgur.com/3?"
@@ -142,7 +142,6 @@ class BioPage(webapp2.RequestHandler):
 		u_d = u.to_dict()
 		u_d['self'] = "/bio"
 		self.response.write(json.dumps(u_d))
-	def patch(self):
 
 
 
