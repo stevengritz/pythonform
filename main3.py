@@ -98,20 +98,20 @@ class RedirectPage(webapp2.RequestHandler):
 		object_type = google_response_json['objectType']
 
 		acc_info = AccInfo()
-		u = ndb.Key(urlsafe=id).get()
-		if u is None:
-			acc_info.id = id
-			acc_info.user = user
-			acc_info.url = url
-			acc_info.object_type = gobject_type
+		# u = ndb.Key(urlsafe=id).get()
+		# if u is None:
+		acc_info.id = id
+		acc_info.user = user
+		acc_info.url = url
+		acc_info.object_type = gobject_type
 
-			acc_info.put()
+		acc_info.put()
 			
-		else:
-			u.username = username
-			u.latestImage = latest_image
-			u.reputation = reputation
-			u.bio = bio
+		# else:
+		# 	u.username = username
+		# 	u.latestImage = latest_image
+		# 	u.reputation = reputation
+		# 	u.bio = bio
 
 		self.response.write("Completed")
 
