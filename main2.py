@@ -171,6 +171,30 @@ class BioPage(webapp2.RequestHandler):
 		u_d['self'] = "/bio"
 		self.response.write(json.dumps(u_d))
 
+	def post(self):
+		token_data = json.loads(self.request.body)
+		access_token = token_data['access_token']
+
+		token_get_header = {'Authorization' : "Bearer " + access_token,
+							'cache-control': "no-cache"}
+
+		imgur_response_acc_json = get_acc_info()
+
+		username = imgur_response_acc_json['data']['url']
+		reputation = imgur_response_acc_json['data']['reputation']
+		bio = username = imgur_response_acc_json['data']['bio']
+
+		acc_info = AccInfo()
+		u = ndb.Key(urlsafe=username).get()
+		if u is None:
+			acc_info.username = username
+			acc_info.latestImage = latest_image
+			acc_info.reputation = reputation
+			acc_info.bio = bio
+			acc_info.put()
+			
+		self.response.write("Completed")
+
 class LatestPage(webapp2.RequestHandler):
 	def get(self):
 		imgur_response_acc_json = get_acc_info()
