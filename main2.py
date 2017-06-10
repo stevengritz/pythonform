@@ -6,6 +6,7 @@ import json
 import urllib
 import urllib2
 import urlparse
+from imgurpython import ImgurClient
 
 CLIENT_ID = "449f7329486a792"
 CLIENT_SECRET = "0b9596450b366f69c2d0f017a902ecfbdac11443"
@@ -88,9 +89,6 @@ class AuthorizePage(webapp2.RequestHandler):
 class RedirectPage(webapp2.RequestHandler):
 	def get(self):
 		
-		req_state = self.request.get('state')
-		if state != req_state:
-			webapp2.abort(403)
 		#self.response.write(code)
 
 		# token_params = {
