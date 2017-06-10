@@ -98,7 +98,7 @@ class RedirectPage(webapp2.RequestHandler):
 		object_type = google_response_json['objectType']
 
 		acc_info = AccInfo()
-		u = ndb.Key(urlsafe=user).get()
+		u = ndb.Key(urlsafe=id).get()
 		if u is None:
 			acc_info.id = id
 			acc_info.user = user
