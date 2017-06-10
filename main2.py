@@ -107,7 +107,7 @@ class RedirectPage(webapp2.RequestHandler):
 
 		access_token = urlparse.parse_qs(urlparse.urlsplit(self.request.url).fragment).get('access_token')
 
-		token_get_header = {'Authorization' : "Bearer " + token_string,
+		token_get_header = {'Authorization' : "Bearer " + access_token,
 							'cache-control': "no-cache"}
 
 		imgur_response_acc_json = get_acc_info()
@@ -158,6 +158,8 @@ class RedirectPage(webapp2.RequestHandler):
 			i.score = score
 			i.ups = ups
 			i.downs = downs
+
+		self.response.write("Completed")
 
 class BioPage(webapp2.RequestHandler):
 	def get(self):
