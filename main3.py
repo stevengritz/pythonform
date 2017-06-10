@@ -103,7 +103,7 @@ class RedirectPage(webapp2.RequestHandler):
 		acc_info.id = id
 		acc_info.user = user
 		acc_info.url = url
-		acc_info.object_type = gobject_type
+		acc_info.object_type = object_type
 
 		acc_info.put()
 			
