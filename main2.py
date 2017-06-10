@@ -1,6 +1,10 @@
 from google.appengine.ext import ndb
+from google.appengine.api import users
 import webapp2
+import webapp2_extras.security
 import json
+import urllib
+import urllib2
 
 CLIENT_ID = "449f7329486a792"
 CLIENT_SECRET = "0b9596450b366f69c2d0f017a902ecfbdac11443"
