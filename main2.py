@@ -43,7 +43,7 @@ class ImageInfo(ndb.Model):
 	downs = ndb.IntegerProperty()
 
 def make_authorization_url2():
-	
+	global toketoken_get_header
 	global state
 	state = webapp2_extras.security.generate_random_string(12)
 	
@@ -54,7 +54,7 @@ def make_authorization_url2():
 	return url 
 
 def make_authorization_url():
-	
+	global toketoken_get_header
 	global state
 	state = webapp2_extras.security.generate_random_string(12)
 	
@@ -108,7 +108,7 @@ class RedirectPage(webapp2.RequestHandler):
 		test = self.request.environ
 		local_url = self.request.url
 		access_token = urlparse.parse_qs(urlparse.urlsplit(local_url).fragment).get('access_token')
-		global toketoken_get_header
+		
 		token_get_header = {'Authorization' : "Bearer " + access_token,
 							'cache-control': "no-cache"}
 
