@@ -14,12 +14,13 @@ REDIRECT_URI = "https://formtesting-166817.appspot.com/redirect"
 #REDIRECT_URI_SECONDARY = "http://localhost:8080/displayname"
 API_URL = " https://api.imgur.com/3?"
 
-global access_token
-global current_user
+
 
 # [START main_page]
 class MainPage(webapp2.RequestHandler):
 	def get(self):
+		global access_token
+		global current_user
 		text = '<a href="%s">Authenticate with Google</a>'
 		url = text % make_authorization_url2()
 		self.response.write(url)
@@ -115,7 +116,7 @@ class RedirectPage(webapp2.RequestHandler):
 		# 	u.reputation = reputation
 		# 	u.bio = bio
 
-		self.response.write("Completed")
+		self.response.write("Completed" + access_token)
 
 class AccountPage(webapp2.RequestHandler):
 	def get(self):
