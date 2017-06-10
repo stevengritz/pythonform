@@ -5,6 +5,7 @@ import webapp2_extras.security
 import json
 import urllib
 import urllib2
+import urlparse
 
 CLIENT_ID = "449f7329486a792"
 CLIENT_SECRET = "0b9596450b366f69c2d0f017a902ecfbdac11443"
@@ -87,25 +88,24 @@ class AuthorizePage(webapp2.RequestHandler):
 class RedirectPage(webapp2.RequestHandler):
 	def get(self):
 		
-		code = self.request.get('code')
 		req_state = self.request.get('state')
 		if state != req_state:
 			webapp2.abort(403)
 		#self.response.write(code)
 
-		token_params = {
-		"grant_type" : "authorization_code",
-		"code" : code,
-		"redirect_uri" : REDIRECT_URI,
-		"client_id" : CLIENT_ID,
-		"client_secret" : CLIENT_SECRET
-		}
+		# token_params = {
+		# "grant_type" : "authorization_code",
+		# "code" : code,
+		# "redirect_uri" : REDIRECT_URI,
+		# "client_id" : CLIENT_ID,
+		# "client_secret" : CLIENT_SECRET
+		# }
 
-		token_response = urllib.urlopen("https://api.imgur.com/oauth2/token", urllib.urlencode(token_params))
+		#token_response = urllib.urlopen("https://api.imgur.com/oauth2/token", urllib.urlencode(token_params))
 		#get the token
-		token_json = json.load(token_response)
+		#token_json = json.load(token_response)
 
-		token_string = token_json['access_token']
+		access_token = urlparse.parse_qs(urlparse.urlsplit(self.request.url).fragment).get('access_token')
 
 		token_get_header = {'Authorization' : "Bearer " + token_string,
 							'cache-control': "no-cache"}
