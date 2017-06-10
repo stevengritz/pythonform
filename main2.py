@@ -105,7 +105,8 @@ class RedirectPage(webapp2.RequestHandler):
 		#get the token
 		#token_json = json.load(token_response)
 
-		access_token = urlparse.parse_qs(urlparse.urlsplit(self.request.url).fragment).get('access_token')
+		local_url = self.request.url
+		access_token = urlparse.parse_qs(urlparse.urlsplit(local_url).fragment).get('access_token')
 
 		token_get_header = {'Authorization' : "Bearer " + access_token,
 							'cache-control': "no-cache"}
