@@ -48,10 +48,13 @@ def make_authorization_url2():
 	state = webapp2_extras.security.generate_random_string(12)
 	
 	params = {"client_id": CLIENT_ID,
-			  "response_type": "token",
-			  "state": state}
-	url = "https://api.imgur.com/oauth2/authorize?" + urllib.urlencode(params)
-	return url 
+			  "response_type": "code",
+			  "state": state,
+			  "redirect_uri": REDIRECT_URI,
+			  "duration": "temporary",
+			  "scope": "email"}
+	url = "https://accounts.google.com/o/oauth2/auth?" + urllib.urlencode(params)
+	return url  
 
 class AuthorizePage(webapp2.RequestHandler):
 	def get(self):
