@@ -8,8 +8,6 @@ import urllib2
 
 CLIENT_ID = "449f7329486a792"
 CLIENT_SECRET = "0b9596450b366f69c2d0f017a902ecfbdac11443"
-#CLIENT_ID = "22681371415-985cnvfq394itn9gg39h5gfu5n9te1ln.apps.googleusercontent.com"
-#CLIENT_SECRET = "Lxnsh7lzqJNZBQ_AFFi8AD7O"
 REDIRECT_URI = "https://formtesting-166817.appspot.com/redirect"
 #REDIRECT_URI = "http://localhost:8080/redirect"
 #REDIRECT_URI_SECONDARY = "http://localhost:8080/displayname"
@@ -20,7 +18,9 @@ global token_get_header
 # [START main_page]
 class MainPage(webapp2.RequestHandler):
 	def get(self):
-		self.response.write("API wrapper for adding convenience functions for Imgur API")
+		text = '<a href="%s">Authenticate with Imgur</a>'
+		url = text % make_authorization_url2()
+		self.response.write(url)
 
 class PolicyPage(webapp2.RequestHandler):
 	def get(self):
@@ -41,18 +41,30 @@ class ImageInfo(ndb.Model):
 	ups = ndb.IntegerProperty()
 	downs = ndb.IntegerProperty()
 
+def make_authorization_url2():
+	
+	global state
+	state = webapp2_extras.security.generate_random_string(12)
+	
+	params = {"client_id": CLIENT_ID,
+			  "response_type": "token",
+			  "state": state}
+	url = "https://api.imgur.com/oauth2/authorize?" + urllib.urlencode(params)
+	return url 
+
 def make_authorization_url():
 	
 	global state
 	state = webapp2_extras.security.generate_random_string(12)
 	
 	params = {"client_id": CLIENT_ID,
-			  "response_type": "code",
-			  "state": state,
-			  "redirect_uri": REDIRECT_URI,
-			  "duration": "temporary" }
-	url = "https://api.imgur.com/oauth2/authorize?" + urllib.urlencode(params)
-	return url
+			  "response_type": "token",
+			  "state": state}
+	url = "https://api.imgur.com/oauth2/authorize"
+
+	data = urllib.urlencode(params)
+
+	return urllib2.Request(url = url, data = data)
 
 def get_acc_info():
 
@@ -70,7 +82,7 @@ def get_sub_info():
 
 class AuthorizePage(webapp2.RequestHandler):
 	def get(self):
-		urllib.urlopen(make_authorization_url())
+		urllib2.urlopen(make_authorization_url())
 
 class RedirectPage(webapp2.RequestHandler):
 	def get(self):
