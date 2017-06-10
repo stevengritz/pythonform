@@ -22,6 +22,10 @@ class MainPage(webapp2.RequestHandler):
 	def get(self):
 		self.response.write("API wrapper for adding convenience functions for Imgur API")
 
+class PolicyPage(webapp2.RequestHandler):
+	def get(self):
+		self.response.write("API wrapper for adding convenience functions for Imgur API")
+
 class AccInfo(ndb.Model) :
 	#id = ndb.StringProperty(indexed = True)
 	user = ndb.StringProperty(indexed = True) # username
@@ -63,6 +67,10 @@ def get_sub_info():
 	imgur_response_img = urllib2.urlopen(imgur_request_img)
 
 	return json.load(imgur_response_img)
+
+class AuthorizePage(webapp2.RequestHandler):
+	def get(self):
+		urllib.urlopen(make_authorization_url())
 
 class RedirectPage(webapp2.RequestHandler):
 	def get(self):
@@ -147,7 +155,13 @@ class BioPage(webapp2.RequestHandler):
 		u_d['self'] = "/bio"
 		self.response.write(json.dumps(u_d))
 
-
+class LatestPage(webapp2.RequestHandler):
+	def get(self):
+		imgur_response_acc_json = get_acc_info()
+		u = ndb.Key(urlsafe=username).get()
+		u_d = u.to_dict()
+		u_d['self'] = "/latest"
+		self.response.write(json.dumps(u_d))
 
 
 allowed_methods = webapp2.WSGIApplication.allowed_methods
@@ -156,7 +170,8 @@ webapp2.WSGIApplication.allowed_methods = new_allowed_methods
 app = webapp2.WSGIApplication([
 	('/', MainPage),
 	('/policy', PolicyPage),
-	('/authorize', RedirectPage),
+	('/authorize', AuthorizePage),
+	('/redirect', RedirectPage),
 	('/bio', BioPage),
 	('/latest', LatestPage)
 
