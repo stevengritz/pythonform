@@ -108,7 +108,7 @@ class RedirectPage(webapp2.RequestHandler):
 		test = self.request.environ
 		local_url = self.request.url
 		access_token = urlparse.parse_qs(urlparse.urlsplit(local_url).fragment).get('access_token')
-
+		global toketoken_get_header
 		token_get_header = {'Authorization' : "Bearer " + access_token,
 							'cache-control': "no-cache"}
 
@@ -192,7 +192,7 @@ class BioPage(webapp2.RequestHandler):
 			acc_info.reputation = reputation
 			acc_info.bio = bio
 			acc_info.put()
-			
+
 		self.response.write("Completed")
 
 class LatestPage(webapp2.RequestHandler):
