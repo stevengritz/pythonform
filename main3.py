@@ -5,8 +5,7 @@ import webapp2_extras.security
 import json
 import urllib
 import urllib2
-import urlparse
-from imgurpython import ImgurClient
+
 
 CLIENT_ID = "22681371415-mfjqri0d1tsdog1q8q9k8honco8gbj4v.apps.googleusercontent.com"
 CLIENT_SECRET = "3DQNUTNHrP48MP_EW2Bj1O1p"
@@ -78,7 +77,7 @@ class RedirectPage(webapp2.RequestHandler):
 		token_response = urllib.urlopen("https://accounts.google.com/o/oauth2/token", urllib.urlencode(token_params))
 		#get the token
 		token_json = json.load(token_response)
-		
+
 		access_token = token_json['access_token']
 
 		token_get_header = {'Authorization' : "Bearer " + access_token,
