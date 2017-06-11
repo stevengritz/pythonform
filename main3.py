@@ -144,7 +144,7 @@ class ActivityPage(webapp2.RequestHandler):
 		query_string = query_data['query']
 		key = query_data['key']
 		params = {
-			"query" : query_string
+			"query" : query_string,
 			"key" : key
 		}
 
