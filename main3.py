@@ -148,7 +148,7 @@ class ActivityPage(webapp2.RequestHandler):
 			"key" : API_KEY
 		}
 
-		google_request = urllib2.Request(url = "https://www.googleapis.com/plus/v1/activities", data = urllib.urlencode(params))
+		google_request = urllib2.Request(url = "https://www.googleapis.com/plus/v1/activities?", data = urllib.urlencode(params))
 		google_response = urllib2.urlopen(google_request)
 		google_response_json = json.load(google_response)
 
