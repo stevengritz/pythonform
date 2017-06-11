@@ -39,8 +39,8 @@ class AccInfo(ndb.Model) :
 class ActivityInfo(ndb.Model):
 	id = ndb.StringProperty()
 	query = ndb.StringProperty() # query text
-	title = ndb.IntegerProperty() # number of views on image
-	url = ndb.IntegerProperty() # raw score of image
+	title = ndb.StringProperty() # number of views on image
+	url = ndb.StringProperty() # raw score of image
 
 def make_authorization_url2():
 	global toketoken_get_header
@@ -162,6 +162,7 @@ class ActivityPage(webapp2.RequestHandler):
 		act_info.query = query_string
 		act_info.title = google_response_json['items'][0]['title']
 		act_info.url = google_response_json['items'][0]['url']
+		act_info.put()
 
 	def get(self, user = None):
 		u = ndb.Key(urlsafe=user).get()
