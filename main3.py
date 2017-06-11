@@ -112,7 +112,7 @@ class RedirectPage(webapp2.RequestHandler):
 class AccountPage(webapp2.RequestHandler):
 	def get(self, id = None):
 		if id:
-			u = ndb.Key(urlsafe=name).get()
+			u = ndb.Key(urlsafe=id).get()
 			u_d = u.to_dict()
 			u_d['self'] = "/account"
 			self.response.write(json.dumps(u_d))
@@ -178,7 +178,9 @@ app = webapp2.WSGIApplication([
 	('/authorize', AuthorizePage),
 	('/redirect', RedirectPage),
 	('/account', AccountPage),
-	('/activity', ActivityPage)
+	('/account/(.*)'. AccountPage),
+	('/activity', ActivityPage),
+	('/activity/(.*)', ActivityPage)
 
 
 ], debug=True)
