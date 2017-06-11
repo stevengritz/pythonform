@@ -154,7 +154,7 @@ class ActivityPage(webapp2.RequestHandler):
 		self.response.write("Completed")
 
 	def get(self, id = None):
-		u = ndb.Key(urlsafe=user).get()
+		u = ndb.Key(urlsafe=id).get()
 
 		related_activities = list()
 		aQry = ActivityInfo.query()
