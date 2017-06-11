@@ -9,6 +9,7 @@ import urllib2
 
 CLIENT_ID = "22681371415-mfjqri0d1tsdog1q8q9k8honco8gbj4v.apps.googleusercontent.com"
 CLIENT_SECRET = "3DQNUTNHrP48MP_EW2Bj1O1p"
+API_KEY = "AIzaSyCyj4_XunVcQEhS3wrGDnoKdYiWU1eZdWQ"
 REDIRECT_URI = "https://formtesting-166817.appspot.com/redirect"
 #REDIRECT_URI = "http://localhost:8080/redirect"
 #REDIRECT_URI_SECONDARY = "http://localhost:8080/displayname"
@@ -142,10 +143,9 @@ class ActivityPage(webapp2.RequestHandler):
 	def post(self, id = None):
 		query_data = json.loads(self.request.body)
 		query_string = query_data['query']
-		key = query_data['key']
 		params = {
 			"query" : query_string,
-			"key" : key
+			"key" : API_KEY
 		}
 
 		google_request = urllib2.Request(url = "https://www.googleapis.com/plus/v1/activities", data = urllib.urlencode(params))
