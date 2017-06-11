@@ -39,6 +39,7 @@ class AccInfo(ndb.Model) :
 class ActivityInfo(ndb.Model) :
 	id = ndb.StringProperty(indexed = True)
 	query_string = ndb.StringProperty() # query text
+	user_id = ndb.StringProperty() # owner of query
 	title = ndb.StringProperty() # number of views on image
 	url = ndb.StringProperty() # raw score of image
 
@@ -146,6 +147,7 @@ class ActivityPage(webapp2.RequestHandler):
 
 		act_info = ActivityInfo()
 		act_info.id = google_response_json['items'][0]['id']
+		act_info.user_id = id
 		act_info.query_string = query_string
 		act_info.title = google_response_json['items'][0]['title']
 		act_info.url = google_response_json['items'][0]['url']
@@ -171,7 +173,7 @@ class ActivityPage(webapp2.RequestHandler):
 		aQry = ActivityInfo.query()
 		for activity in aQry.fetch(50, keys_only = True):
 			act = activity.get()
-			if act.query_string == u.query_string:
+			if act.query_string == u.query_string and act.user_id == id:
 				activity.delete()
 
 
