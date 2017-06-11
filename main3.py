@@ -19,8 +19,6 @@ API_URL = " https://api.imgur.com/3?"
 # [START main_page]
 class MainPage(webapp2.RequestHandler):
 	def get(self):
-		global access_token
-		global current_user
 		text = '<a href="%s">Authenticate with Google</a>'
 		url = text % make_authorization_url2()
 		self.response.write(url)
@@ -33,7 +31,6 @@ class AccInfo(ndb.Model) :
 	id = ndb.StringProperty(indexed = True)
 	user = ndb.StringProperty() # displayname
 	url = ndb.StringProperty() #image id of latest image
-	email = ndb.FloatProperty()
 	object_type = ndb.StringProperty()
 	query = ndb.StringProperty() # query text
 
@@ -109,24 +106,26 @@ class RedirectPage(webapp2.RequestHandler):
 		acc_info.object_type = object_type
 
 		acc_info.put()
-			
-		# else:
-		# 	u.username = username
-		# 	u.latestImage = latest_image
-		# 	u.reputation = reputation
-		# 	u.bio = bio
 
-		self.response.write("Completed" + access_token)
+		self.response.write("Completed " + access_token)
 
 class AccountPage(webapp2.RequestHandler):
-	def get(self):
-		u = ndb.Key(urlsafe=current_user).get()
-		u_d = u.to_dict()
-		u_d['self'] = "/account"
-		self.response.write(json.dumps(u_d))
+	def get(self, id = None):
+		if id:
+			u = ndb.Key(urlsafe=name).get()
+			u_d = u.to_dict()
+			u_d['self'] = "/account"
+			self.response.write(json.dumps(u_d))
+		else:
+			all_users = list()
+			uQry = AccInfo.query()
+			for user in uQry.fetch(keys_only = True):
+				u = user.get()
+				u_dict = u.to_dict()
+				all_users.append(u_dict)
+			self.response.write(json.dumps(all_users))
 
 	def post(self):
-		
 
 		acc_info = AccInfo()
 		u = ndb.Key(urlsafe=username).get()
@@ -137,7 +136,7 @@ class AccountPage(webapp2.RequestHandler):
 			acc_info.bio = bio
 			acc_info.put()
 
-		self.response.write("Completed" + access_token)
+		self.response.write("Completed")
 
 class ActivityPage(webapp2.RequestHandler):
 	def post(self, user = None):
