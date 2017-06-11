@@ -142,9 +142,10 @@ class ActivityPage(webapp2.RequestHandler):
 	def post(self, id = None):
 		query_data = json.loads(self.request.body)
 		query_string = query_data['query']
-
+		key = query_data['key']
 		params = {
 			"query" : query_string
+			"key" : key
 		}
 
 		google_request = urllib2.Request(url = "https://www.googleapis.com/plus/v1/activities", data = urllib.urlencode(params))
