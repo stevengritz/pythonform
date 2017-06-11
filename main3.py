@@ -164,6 +164,16 @@ class ActivityPage(webapp2.RequestHandler):
 				related_activities.append(act.to_dict())
 
 		self.response.write(json.dumps(related_activities))
+	def delete(self, id = None):
+		u = ndb.Key(urlsafe=id).get()
+
+		related_activities = list()
+		aQry = ActivityInfo.query()
+		for activity in aQry.fetch(50, keys_only = True):
+			act = activity.get()
+			if act.query_string == u.query_string:
+				act.delete()
+
 
 
 allowed_methods = webapp2.WSGIApplication.allowed_methods
