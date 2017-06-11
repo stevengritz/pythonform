@@ -33,12 +33,12 @@ class AccInfo(ndb.Model) :
 	user = ndb.StringProperty() # displayname
 	url = ndb.StringProperty() #image id of latest image
 	object_type = ndb.StringProperty()
-	query = ndb.StringProperty() # query text
+	query_string = ndb.StringProperty() # query text
 
 
 class ActivityInfo(ndb.Model) :
 	id = ndb.StringProperty(indexed = True)
-	query = ndb.StringProperty() # query text
+	query_string = ndb.StringProperty() # query text
 	title = ndb.StringProperty() # number of views on image
 	url = ndb.StringProperty() # raw score of image
 
@@ -141,12 +141,12 @@ class ActivityPage(webapp2.RequestHandler):
 
 		#Add top query entry to activty table with user key
 		u = ndb.Key(urlsafe=id).get()
-		u.query = query_string
+		u.query_string = query_string
 		u.put()
 
 		act_info = ActivityInfo()
 		act_info.id = google_response_json['items'][0]['id']
-		act_info.query = query_string
+		act_info.query_string = query_string
 		act_info.title = google_response_json['items'][0]['title']
 		act_info.url = google_response_json['items'][0]['url']
 		act_info.put()
@@ -157,10 +157,10 @@ class ActivityPage(webapp2.RequestHandler):
 		u = ndb.Key(urlsafe=id).get()
 
 		related_activities = list()
-		aQry = ActivityInfo().query()
+		aQry = ActivityInfo.query()
 		for activity in aQry.fetch(50, keys_only = True):
 			act = activity.get()
-			if act.query == u.query:
+			if act.query_string == u.query_string:
 				related_activities.append(act.to_dict())
 
 		self.response.write(json.dumps(related_activities))
