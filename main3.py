@@ -36,7 +36,7 @@ class AccInfo(ndb.Model) :
 	query = ndb.StringProperty() # query text
 
 
-class ActivityInfo(ndb.Model):
+class ActivityInfo(ndb.Model) :
 	id = ndb.StringProperty(indexed = True)
 	query = ndb.StringProperty() # query text
 	title = ndb.StringProperty() # number of views on image
@@ -157,7 +157,7 @@ class ActivityPage(webapp2.RequestHandler):
 		u = ndb.Key(urlsafe=id).get()
 
 		related_activities = list()
-		aQry = ActivityInfo.query()
+		aQry = ActivityInfo().query()
 		for activity in aQry.fetch(50, keys_only = True):
 			act = activity.get()
 			if act.query == u.query:
