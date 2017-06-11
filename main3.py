@@ -172,7 +172,7 @@ class ActivityPage(webapp2.RequestHandler):
 		for activity in aQry.fetch(50, keys_only = True):
 			act = activity.get()
 			if act.query_string == u.query_string:
-				act.delete()
+				activity.delete()
 
 
 
