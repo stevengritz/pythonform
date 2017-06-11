@@ -151,7 +151,7 @@ class ActivityPage(webapp2.RequestHandler):
 		google_request = urllib.urlopen("https://www.googleapis.com/plus/v1/activities?query="+query_string+"&key="+API_KEY)
 		# google_request = urllib2.Request(url = "https://www.googleapis.com/plus/v1/activities?", data = urllib.urlencode(params))
 		# google_response = urllib2.urlopen(google_request)
-		google_response_json = json.load(google_response)
+		google_response_json = json.load(google_request)
 
 		#Add top query entry to activty table with user key
 		u = ndb.Key(urlsafe=id).get()
