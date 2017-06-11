@@ -37,7 +37,7 @@ class AccInfo(ndb.Model) :
 
 
 class ActivityInfo(ndb.Model):
-	id = ndb.StringProperty()
+	id = ndb.StringProperty(indexed = True)
 	query = ndb.StringProperty() # query text
 	title = ndb.StringProperty() # number of views on image
 	url = ndb.StringProperty() # raw score of image
@@ -117,14 +117,6 @@ class AccountPage(webapp2.RequestHandler):
 			u_d = u.to_dict()
 			u_d['key'] = "/account"
 			self.response.write(json.dumps(u_d))
-		else:
-			all_users = list()
-			uQry = AccInfo.query()
-			for user in uQry.fetch(keys_only = True):
-				u = user.get()
-				u_dict = u.to_dict()
-				all_users.append(u_dict)
-			self.response.write(json.dumps(all_users))
 
 	def post(self):
 
@@ -161,11 +153,17 @@ class ActivityPage(webapp2.RequestHandler):
 
 		self.response.write("Completed")
 
-	def get(self, user = None):
+	def get(self, id = None):
 		u = ndb.Key(urlsafe=user).get()
-		u_d = u.to_dict()
-		u_d['self'] = "/latest"
-		self.response.write(json.dumps(u_d))
+
+		related_activities = list()
+		aQry = ActivityInfo.query()
+		for activity in aQry.fetch(50, keys_only = True):
+			act = activity.get()
+			if act.query == u.query:
+				related_activities.append(act.to_dict())
+
+		self.response.write(json.dumps(related_activities))
 
 
 allowed_methods = webapp2.WSGIApplication.allowed_methods
