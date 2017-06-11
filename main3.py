@@ -129,13 +129,7 @@ class AccountPage(webapp2.RequestHandler):
 	def post(self):
 
 		acc_info = AccInfo()
-		u = ndb.Key(urlsafe=username).get()
-		if u is None:
-			acc_info.username = username
-			acc_info.latestImage = latest_image
-			acc_info.reputation = reputation
-			acc_info.bio = bio
-			acc_info.put()
+		u = ndb.Key(urlsafe=id).get()
 
 		self.response.write("Completed")
 
@@ -164,6 +158,8 @@ class ActivityPage(webapp2.RequestHandler):
 		act_info.title = google_response_json['items'][0]['title']
 		act_info.url = google_response_json['items'][0]['url']
 		act_info.put()
+
+		self.response.write("Completed")
 
 	def get(self, user = None):
 		u = ndb.Key(urlsafe=user).get()
