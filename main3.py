@@ -156,6 +156,7 @@ class ActivityPage(webapp2.RequestHandler):
 		#Add top query entry to activty table with user key
 		u = ndb.Key(urlsafe=id).get()
 		u.query = query_string
+		u.put()
 
 		act_info = ActivityInfo()
 		act_info.id = google_response_json['items'][0]['id']
