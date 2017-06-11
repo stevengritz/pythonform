@@ -114,7 +114,7 @@ class AccountPage(webapp2.RequestHandler):
 		if id:
 			u = ndb.Key(urlsafe=id).get()
 			u_d = u.to_dict()
-			u_d['self'] = "/account"
+			u_d['key'] = "/account"
 			self.response.write(json.dumps(u_d))
 		else:
 			all_users = list()
@@ -139,13 +139,12 @@ class AccountPage(webapp2.RequestHandler):
 		self.response.write("Completed")
 
 class ActivityPage(webapp2.RequestHandler):
-	def post(self, user = None):
+	def post(self, id = None):
 		query_data = json.loads(self.request.body)
 		query_string = query_data['query']
 
 		params = {
-			"query" : query_string,
-			"key" : access_token
+			"query" : query_string
 		}
 
 		google_request = urllib2.Request(url = "https://www.googleapis.com/plus/v1/activities", data = urllib.urlencode(params))
@@ -153,7 +152,7 @@ class ActivityPage(webapp2.RequestHandler):
 		google_response_json = json.load(google_response)
 
 		#Add top query entry to activty table with user key
-		u = ndb.Key(urlsafe=user).get()
+		u = ndb.Key(urlsafe=id).get()
 		u.query = query_string
 
 		act_info = ActivityInfo()
