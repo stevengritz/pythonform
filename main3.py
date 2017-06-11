@@ -178,7 +178,7 @@ app = webapp2.WSGIApplication([
 	('/authorize', AuthorizePage),
 	('/redirect', RedirectPage),
 	('/account', AccountPage),
-	('/account/(.*)'. AccountPage),
+	('/account/(.*)', AccountPage),
 	('/activity', ActivityPage),
 	('/activity/(.*)', ActivityPage)
 
